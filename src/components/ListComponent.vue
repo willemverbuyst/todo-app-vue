@@ -2,7 +2,7 @@
 import { ref, type Ref } from 'vue'
 import ListItemComponent from './ListItemComponent.vue'
 
-const list: Ref<{ title: string; id: string; body: string }[]> = ref([])
+const list: Ref<{ title: string; id: number; body: string }[]> = ref([])
 const error = ref(null)
 
 async function getPosts() {
@@ -17,13 +17,10 @@ getPosts()
 </script>
 
 <template>
-  <div v-for="item in list" :key="item.id">
-    <ListItemComponent>
-      <template #icon>
-        {{ item.id }}
-      </template>
+  <div v-for="item in list.map((i) => ({ ...i, done: Math.random() < 0.5 }))" :key="item.id">
+    <ListItemComponent :id="item.id" :done="item.done">
       <template #heading>{{ item.title }}</template>
-      {{ item.body }}
+      <template #note>{{ item.body }}</template>
     </ListItemComponent>
   </div>
 </template>

@@ -1,13 +1,23 @@
+<script setup lang="ts">
+defineProps<{
+  id: number
+  done: boolean
+}>()
+</script>
+
 <template>
   <div class="item">
     <i>
-      <slot name="icon"></slot>
+      {{ id }}
     </i>
+
+    <input type="checkbox" :checked="done" />
+
     <div class="details">
       <h3>
         <slot name="heading"></slot>
       </h3>
-      <slot></slot>
+      <slot name="note"></slot>
     </div>
   </div>
 </template>
