@@ -7,9 +7,9 @@ defineProps<{
 
 <template>
   <div class="item">
-    <i :class="{ done: done }">
+    <span :class="{ done: done }" @click="$emit('updateDone', id)">
       {{ id }}
-    </i>
+    </span>
 
     <div class="details">
       <h3>
@@ -32,7 +32,7 @@ defineProps<{
   margin-left: 1rem;
 }
 
-i {
+span {
   display: flex;
   place-items: center;
   place-content: center;
@@ -42,7 +42,7 @@ i {
   color: #111;
 }
 
-i.done {
+span.done {
   border: 5px solid var(--color-green);
 }
 
@@ -59,7 +59,7 @@ h3 {
     padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
   }
 
-  i {
+  span {
     top: calc(50% - 25px);
     left: -26px;
     position: absolute;
@@ -70,7 +70,7 @@ h3 {
     height: 50px;
   }
 
-  i.done {
+  span.done {
     background: var(--color-green);
   }
 }
