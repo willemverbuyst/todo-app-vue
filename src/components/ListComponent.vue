@@ -35,7 +35,7 @@ getPosts()
   <div v-for="item in list" :key="item.id">
     <ListItemComponent :id="item.id" :done="item.done" @update-done="updateDone">
       <template #heading>{{ item.title }}</template>
-      <template #note>{{ item.body }}</template>
+      <template v-if="!item.done" #note>{{ item.body }}</template>
     </ListItemComponent>
   </div>
 </template>
