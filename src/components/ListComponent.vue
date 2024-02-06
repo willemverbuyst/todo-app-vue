@@ -27,8 +27,6 @@ function updateDone(id: number) {
   todo.done = !wasDone
 }
 
-console.log('running')
-
 console.error(error)
 getPosts()
 </script>

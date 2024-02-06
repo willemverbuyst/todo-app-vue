@@ -38,12 +38,12 @@ span {
   place-content: center;
   width: 32px;
   height: 32px;
-
+  background: var(--color-red);
   color: #111;
 }
 
 span.done {
-  border: 5px solid var(--color-green);
+  background: var(--color-green);
 }
 
 h3 {
@@ -63,7 +63,6 @@ h3 {
     top: calc(50% - 25px);
     left: -26px;
     position: absolute;
-    border: 1px solid var(--color-border);
     background: var(--color-red);
     border-radius: 8px;
     width: 50px;
