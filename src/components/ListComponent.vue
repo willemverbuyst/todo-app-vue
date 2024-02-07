@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import ListItemComponent from './ListItemComponent.vue'
 
 type Todo = { title: string; id: number; body: string; done: boolean }
@@ -40,13 +40,23 @@ function removeFilter() {
 function filterTodo() {
   status.value = 'todo'
 }
+
+const classObjectAll = computed(() => ({
+  selected: status.value === 'all'
+}))
+const classObjectDone = computed(() => ({
+  selected: status.value === 'done'
+}))
+const classObjectTodo = computed(() => ({
+  selected: status.value === 'todo'
+}))
 </script>
 
 <template>
   <section class="btn-group">
-    <button @click="removeFilter">All</button>
-    <button @click="filterDone">Done</button>
-    <button @click="filterTodo">To Do</button>
+    <button :class="classObjectAll" @click="removeFilter">All</button>
+    <button :class="classObjectDone" @click="filterDone">Done</button>
+    <button :class="classObjectTodo" @click="filterTodo">To Do</button>
   </section>
   <div
     v-for="item in list.filter((i) =>
@@ -63,7 +73,6 @@ function filterTodo() {
 
 <style>
 .btn-group button {
-  background-color: hsla(160, 100%, 37%, 1);
   border: 1px solid hsla(160, 100%, 37%, 1);
   color: white;
   padding: 10px 24px;
@@ -74,8 +83,12 @@ function filterTodo() {
   border-right: none;
 }
 
-/* Add a background color on hover */
-.btn-group button:hover {
+.btn-group button:hover,
+.selected {
   background-color: hsla(160, 100%, 37%, 0.2);
+}
+
+button {
+  background-color: hsla(160, 100%, 37%, 1);
 }
 </style>
