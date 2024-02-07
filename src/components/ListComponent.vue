@@ -5,6 +5,7 @@ import ListItemComponent from './ListItemComponent.vue'
 type Todo = { title: string; id: number; body: string; done: boolean }
 
 const list: Ref<Todo[]> = ref([])
+const status: Ref<'done' | 'todo' | 'all'> = ref('all')
 const error = ref(null)
 
 async function getPosts() {
@@ -29,13 +30,52 @@ function updateDone(id: number) {
 
 console.error(error)
 getPosts()
+
+function filterDone() {
+  status.value = 'done'
+}
+function removeFilter() {
+  status.value = 'all'
+}
+function filterTodo() {
+  status.value = 'todo'
+}
 </script>
 
 <template>
-  <div v-for="item in list" :key="item.id">
+  <section class="btn-group">
+    <button @click="removeFilter">All</button>
+    <button @click="filterDone">Done</button>
+    <button @click="filterTodo">To Do</button>
+  </section>
+  <div
+    v-for="item in list.filter((i) =>
+      status === 'all' ? i : status === 'done' ? i.done : !i.done
+    )"
+    :key="item.id"
+  >
     <ListItemComponent :id="item.id" :done="item.done" @update-done="updateDone">
       <template #heading>{{ item.title }}</template>
       <template v-if="!item.done" #note>{{ item.body }}</template>
     </ListItemComponent>
   </div>
 </template>
+
+<style>
+.btn-group button {
+  background-color: hsla(160, 100%, 37%, 1);
+  border: 1px solid hsla(160, 100%, 37%, 1);
+  color: white;
+  padding: 10px 24px;
+  cursor: pointer;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: hsla(160, 100%, 37%, 0.2);
+}
+</style>
